@@ -17,7 +17,7 @@ public class Route extends RouteBuilder {
         from("timer:oracle_transactions?fixedRate=true&period=5000")
                 .beanRef("transactionId", "getMaxTransactionId")
                 .setBody(simple("select * from mtl_material_transactions where transaction_id > ${in.body} order by transaction_id"))
-                .to("jdbc:viiper")
+                .to("jdbc:viiper-ds")
                 .split()
                     .method("transactionId", "split")
                     .streaming()
